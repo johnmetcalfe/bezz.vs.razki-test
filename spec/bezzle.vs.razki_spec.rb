@@ -18,7 +18,7 @@ describe "Bezzle.vs.Razki" do
   #
   # end
 
-  it "login and add a new voucher" do
+  it "login and add a new voucher check it exists and delete it" do
     @title = "Test Voucher"
     @body = "Test Body"
     @rating = 5
@@ -41,29 +41,17 @@ describe "Bezzle.vs.Razki" do
 
   end
 
-  it "login and add a new book" do
-    # @title = "Test Book"
-    # @body = "Test Body"
-    # @rating = 5
-    # login
-    # #click New Voucher in Nav
-    # @driver.find_element(css: "body > nav > a:nth-child(3)").click
-    # #Enter Data
-    # @driver.find_element(css: "body > form > input[type='text']:nth-child(1)").send_keys @title
-    # @driver.find_element(css: "body > form > textarea").send_keys @body
-    # @driver.find_element(css: "body > form > input[type='text']:nth-child(3)").send_keys @rating
-    # #Submit Data
-    # @driver.find_element(css: "body > form > input[type='submit']:nth-child(4)").click
-    # #Check voucher Exists
-    # page = @driver.page_source
-    # expect(page.to_s).to include @title, @body, @rating.to_s
-    # #Delete Voucher
-    # @driver.find_element(css: "body > fieldset > h3 > a").click
-    # @driver.find_element(css: "body > form > button").click
+  it "login and add a new book check it exists and delete it" do
+    create_book("Test Book", "Test Body", 5)
+    #Check Book Exists
+    page = @driver.page_source
+    expect(page.to_s).to include @title, @body, @rating.to_s
+    #Delete Book
+    @driver.find_element(css: "body > fieldset > h3 > a").click
+    @driver.find_element(css: "body > form > button").click
     #@driver.quit
 
   end
 
-  it "try logging in with incorrect details"
 
 end

@@ -25,3 +25,19 @@ def login
   @driver.find_element(name: "password").send_keys @password
   @driver.find_element(css: "body > form > input[type='submit']").click
 end
+
+def create_book(title, body, rating)
+  @title = title
+  @body = body
+  @rating = rating
+  login
+  #click New Book in Nav
+  @driver.find_element(css: "body > nav > a:nth-child(5)").click
+  #Enter Data
+  @driver.find_element(css: "body > form > input[type='text']:nth-child(1)").send_keys @title
+  @driver.find_element(css: "body > form > textarea").send_keys @body
+  @driver.find_element(css: "body > form > input[type='text']:nth-child(3)").send_keys @rating
+  #Submit Data
+  @driver.find_element(css: "body > form > input[type='submit']:nth-child(4)").click
+
+end
