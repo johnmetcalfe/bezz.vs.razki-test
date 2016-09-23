@@ -8,6 +8,7 @@ describe "Bezzle.vs.Razki" do
 
   # it "Valid creating new book" do
   #
+  #   login
   #   book1 = HTTParty.post("http://localhost:8085/books", query:{title: "Test Book 1", body:"Awesome test book", rating: 5})
   #   expect(book1.code).to eq 201
   #   expect(book1.message).to eq "Created"
@@ -15,29 +16,16 @@ describe "Bezzle.vs.Razki" do
   #   expect(book1['body']).to eq "Awesome test book"
   #   expect(book1['rating']).to eq 5
   #
-  #
   # end
 
   it "login and add a new voucher check it exists and delete it" do
-    @title = "Test Voucher"
-    @body = "Test Body"
-    @rating = 5
-    login
-    #click New Voucher in Nav
-    @driver.find_element(css: "body > nav > a:nth-child(3)").click
-    #Enter Data
-    @driver.find_element(css: "body > form > input[type='text']:nth-child(1)").send_keys @title
-    @driver.find_element(css: "body > form > textarea").send_keys @body
-    @driver.find_element(css: "body > form > input[type='text']:nth-child(3)").send_keys @rating
-    #Submit Data
-    @driver.find_element(css: "body > form > input[type='submit']:nth-child(4)").click
+    create_voucher("Test Voucher", "Test Body", 5)
     #Check voucher Exists
     page = @driver.page_source
     expect(page.to_s).to include @title, @body, @rating.to_s
     #Delete Voucher
     @driver.find_element(css: "body > fieldset > h3 > a").click
     @driver.find_element(css: "body > form > button").click
-    #@driver.quit
 
   end
 
@@ -49,9 +37,94 @@ describe "Bezzle.vs.Razki" do
     #Delete Book
     @driver.find_element(css: "body > fieldset > h3 > a").click
     @driver.find_element(css: "body > form > button").click
-    #@driver.quit
 
   end
 
+  it "Login create a new voucher and check it exists then edit and check the edit is update, then delete the voucher" do
+    create_voucher("Test Voucher", "Test Body", 5)
+    #Check Voucher exists
+    page = @driver.page_source
+    expect(page.to_s).to include @title, @body, @rating.to_s
+    #Edit the voucher
+    @driver.find_element(css: "body > fieldset > a").click
+    @driver.find_element(css: "body > form > input[type='text']:nth-child(2)").send_keys " Updated"
+    @driver.find_element(css: "body > form > input[type='submit']:nth-child(5)").click
+    #Check updated exists
+    page_updated = @driver.page_source
+    expect(page_updated.to_s).to include "#{@title} Updated", @body, @rating.to_s
+    #Delete Updated Voucher
+    @driver.find_element(css: "body > fieldset > h3 > a").click
+    @driver.find_element(css: "body > form > button").click
+
+  end
+
+  it "Login create a new voucher and check it exists then edit and check the edit is update, then delete the voucher" do
+    create_book("Test Book", "Test Body", 5)
+    #Check Book exists
+    page = @driver.page_source
+    expect(page.to_s).to include @title, @body, @rating.to_s
+    #Edit the Book
+    @driver.find_element(css: "body > fieldset > a").click
+    @driver.find_element(css: "body > form > input[type='text']:nth-child(2)").send_keys " Updated"
+    @driver.find_element(css: "body > form > input[type='submit']:nth-child(5)").click
+    #Check updated exists
+    page_updated = @driver.page_source
+    expect(page_updated.to_s).to include "#{@title} Updated", @body, @rating.to_s
+    #Delete Updated Book
+    @driver.find_element(css: "body > fieldset > h3 > a").click
+    @driver.find_element(css: "body > form > button").click
+
+  end
+
+  it "login and add a new voucher check it exists and delete it" do
+    create_voucher("g", "g", 5)
+    #Check voucher Exists
+    page = @driver.page_source
+    expect(page.to_s).to include "Voucher validation failed"
+
+  end
+
+  it "login and add a invalid book check error exists" do
+    create_book("g", "g", 4)
+    #Check Book Exists
+    page = @driver.page_source
+    expect(page.to_s).to include "Book validation failed"
+
+  end
+
+  it "Login create a new voucher and check it exists then edit and check the edit is update, then delete the voucher" do
+    create_voucher("Test Voucher", "Test Body", 5)
+    #Check Voucher exists
+    page = @driver.page_source
+    expect(page.to_s).to include @title, @body, @rating.to_s
+    #Edit the voucher
+    @driver.find_element(css: "body > fieldset > a").click
+    @driver.find_element(css: "body > form > input[type='text']:nth-child(2)").send_keys ""
+    @driver.find_element(css: "body > form > input[type='text']:nth-child(2)").send_keys "zig"
+    @driver.find_element(css: "body > form > input[type='submit']:nth-child(5)").click
+    #Check updated exists
+    page = @driver.page_source
+    expect(page.to_s).to include "Voucher validation failed"
+
+  end
+
+  it "Login create a new voucher and check it exists then edit and check the edit is update, then delete the voucher" do
+    create_book("Test Book", "Test Body", 5)
+    #Check Book exists
+    page = @driver.page_source
+    expect(page.to_s).to include @title, @body, @rating.to_s
+    #Edit the Book
+    @driver.find_element(css: "body > fieldset > a").click
+    @driver.find_element(css: "body > form > input[type='text']:nth-child(2)").send_keys " Updated"
+    @driver.find_element(css: "body > form > input[type='submit']:nth-child(5)").click
+    #Check updated exists
+    page = @driver.page_source
+    expect(page.to_s).to include "Book validation failed"
+
+  end
+
+  after(:all) do
+    #@driver.quit
+  end
 
 end
