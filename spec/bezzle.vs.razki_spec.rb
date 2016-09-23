@@ -18,6 +18,10 @@ describe "Bezzle.vs.Razki" do
   #
   # end
 
+  it "Should Register a new user" do
+
+  end
+
   it "login and add a new voucher check it exists and delete it" do
     create_voucher("Test Voucher", "Test Body", 5)
     #Check voucher Exists
@@ -76,7 +80,7 @@ describe "Bezzle.vs.Razki" do
 
   end
 
-  it "login and add a new voucher check it exists and delete it" do
+  it "login and add a invalid voucher check error exists" do
     create_voucher("g", "g", 5)
     #Check voucher Exists
     page = @driver.page_source
@@ -99,8 +103,8 @@ describe "Bezzle.vs.Razki" do
     expect(page.to_s).to include @title, @body, @rating.to_s
     #Edit the voucher
     @driver.find_element(css: "body > fieldset > a").click
-    @driver.find_element(css: "body > form > input[type='text']:nth-child(2)").send_keys ""
-    @driver.find_element(css: "body > form > input[type='text']:nth-child(2)").send_keys "zig"
+    @driver.find_element(css: "body > form > input[type='text']:nth-child(2)").clear
+    @driver.find_element(css: "body > form > input[type='text']:nth-child(2)").send_keys "g"
     @driver.find_element(css: "body > form > input[type='submit']:nth-child(5)").click
     #Check updated exists
     page = @driver.page_source
@@ -115,7 +119,8 @@ describe "Bezzle.vs.Razki" do
     expect(page.to_s).to include @title, @body, @rating.to_s
     #Edit the Book
     @driver.find_element(css: "body > fieldset > a").click
-    @driver.find_element(css: "body > form > input[type='text']:nth-child(2)").send_keys " Updated"
+    @driver.find_element(css: "body > form > input[type='text']:nth-child(2)").clear
+    @driver.find_element(css: "body > form > input[type='text']:nth-child(2)").send_keys "g"
     @driver.find_element(css: "body > form > input[type='submit']:nth-child(5)").click
     #Check updated exists
     page = @driver.page_source
