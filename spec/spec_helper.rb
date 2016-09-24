@@ -15,11 +15,11 @@ require 'selenium-webdriver'
 require 'yaml'
 
 def url(path)
-  ('http://localhost:8085/' + path)
+  ('http://178.62.74.83:8085/' + path)
 end
 
 def login
-  @url = "http://localhost:8085/sessions/new"
+  @url = "http://178.62.74.83:8085/sessions/new"
   @driver.get @url
   @driver.find_element(name: "email").send_keys @email
   @driver.find_element(name: "password").send_keys @password

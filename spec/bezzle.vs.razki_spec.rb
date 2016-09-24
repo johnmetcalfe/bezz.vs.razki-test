@@ -8,19 +8,16 @@ describe "Bezzle.vs.Razki" do
 
   # it "Valid creating new book" do
   #
-  #   login
-  #   book1 = HTTParty.post("http://localhost:8085/books", query:{title: "Test Book 1", body:"Awesome test book", rating: 5})
-  #   expect(book1.code).to eq 201
-  #   expect(book1.message).to eq "Created"
-  #   expect(book1['title']).to eq "Test Book 1"
-  #   expect(book1['body']).to eq "Awesome test book"
+  #   login = HTTParty.post("http://localhost:8085/sessions", body:{email: @email, password: @password})
+  #   book1 = HTTParty.post("http://localhost:8085/books", body:{title: "Test book 1", body: "Test Body", rating: 5})
+  #   expect(book1.code).to eq 200
+  #   expect(book1.message).to eq "OK"
+  #   expect(book1.body).to eq "Test Book 1"
+  #   expect(book1['body']).to eq "Test Body"
   #   expect(book1['rating']).to eq 5
-  #
+  #   exit
   # end
 
-  it "Should Register a new user" do
-
-  end
 
   it "login and add a new voucher check it exists and delete it" do
     create_voucher("Test Voucher", "Test Body", 5)
